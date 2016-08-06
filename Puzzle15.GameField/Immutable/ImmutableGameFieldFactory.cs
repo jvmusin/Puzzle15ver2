@@ -7,8 +7,9 @@ namespace Puzzle15.GameField.Immutable
 	public class ImmutableGameFieldFactory<TCell> : IGameFieldFactory<TCell>
 	{
 		public IGameField<TCell> CreateGameField(Size size, Func<CellLocation, TCell> getValue)
-		{
-			return new ImmutableGameField<TCell>(size, getValue);
-		}
+			=> new ImmutableGameField<TCell>(size, getValue);
+
+		public IGameField<TCell> CreateGameField(IGameField<TCell> source) 
+			=> CreateGameField(source.Size, loc => source[loc]);
 	}
 }
