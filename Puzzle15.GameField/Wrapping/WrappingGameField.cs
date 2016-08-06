@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Puzzle15.Core.Arrays;
 
@@ -11,14 +12,24 @@ namespace Puzzle15.GameField.Wrapping
 
 		private readonly IGameField<T> parent;
 		private readonly CellInfo<T> changedCell;
-
+		
 		public WrappingGameField(IGameField<T> source) : base(source.Size)
 		{
-			parent = source;
+			parent = source.Clone();
 		}
 
-		private WrappingGameField(IGameField<T> source, CellInfo<T> changedCell) : this(source)
+		public WrappingGameField(Size size, Func<CellLocation, T> getValue) : base(size)
 		{
+			foreach (var location in this.Select(x => x.Location))
+			{
+				var cell = new CellInfo<T>(location, getValue(location));
+				parent = new WrappingGameField<T>(parent ?? this, cell);
+			}
+		}
+
+		private WrappingGameField(IGameField<T> source, CellInfo<T> changedCell) : base(source.Size)
+		{
+			parent = source;
 			this.changedCell = changedCell;
 		}
 
@@ -81,7 +92,7 @@ namespace Puzzle15.GameField.Wrapping
 
 		public override IGameField<T> Clone()
 		{
-			return new WrappingGameField<T>(parent);
+			return new WrappingGameField<T>(parent, null);
 		}
 	}
 }

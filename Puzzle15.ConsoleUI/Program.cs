@@ -22,7 +22,8 @@ namespace Puzzle15.ConsoleUI
 			kernel.Bind<IGameFieldFactory<int>>().To<ImmutableGameFieldFactory<int>>();
 			kernel.Bind<IGameFieldShuffler<int>>().To<GameFieldShuffler<int>>();
 			kernel.Bind<IGameFactory<int>>().To<ClassicGameFactory>();
-			kernel.Get<Program>().Run();
+			//kernel.Get<Program>().Run();
+			kernel.Get<FieldShufflerTest>().Run();
 		}
 
 		private void Run()

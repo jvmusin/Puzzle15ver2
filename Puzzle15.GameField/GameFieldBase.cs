@@ -57,5 +57,14 @@ namespace Puzzle15.GameField
 		{
 			return 0;
 		}
+
+		public override string ToString()
+		{
+			var lines = Enumerable.Range(0, Size.Height)
+				.Select(i => Enumerable.Range(0, Size.Width)
+					.Select(j => this[new CellLocation(i, j)]));
+			var joinedLines = lines.Select(line => string.Join(" ", line));
+			return string.Join("\n", joinedLines);
+		}
 	}
 }

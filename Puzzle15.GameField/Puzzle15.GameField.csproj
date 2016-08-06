@@ -50,6 +50,7 @@
     <Compile Include="Mutable\MutableGameField.cs" />
     <Compile Include="Mutable\MutableGameFieldFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingleGameFieldFactory.cs" />
     <Compile Include="Wrapping\WrappingGameField.cs" />
     <Compile Include="Wrapping\WrappingGameFieldFactory.cs" />
   </ItemGroup>
