@@ -20,7 +20,7 @@ namespace Puzzle15.GameField
 
 		protected void CheckLocation(CellLocation location)
 		{
-			if (!location.IsInside(Size))
+			if (!location.IsInsideField(Size))
 				throw new InvalidLocationException();
 		}
 

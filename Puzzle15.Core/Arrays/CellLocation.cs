@@ -16,7 +16,7 @@ namespace Puzzle15.Core.Arrays
 			Column = column;
 		}
 
-		public bool IsInside(Size fieldSize)
+		public bool IsInsideField(Size fieldSize)
 		{
 			return InInRange(Row, 0, fieldSize.Height) &&
 			       InInRange(Column, 0, fieldSize.Width);

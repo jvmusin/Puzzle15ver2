@@ -14,17 +14,17 @@ namespace Puzzle15.GameField.Mutable
 		
 		private readonly TCell[][] field;
 		private readonly Dictionary<TCell, List<CellLocation>> locations;
-		private readonly List<CellLocation> emptyLocations;
+		private readonly List<CellLocation> emptyValueLocations;
 
 		public MutableGameField(Size size, Func<CellLocation, TCell> getValue) : base(size)
 		{
 			field = ArrayExtensions.CreateField<TCell>(size);
 
 			locations = new Dictionary<TCell, List<CellLocation>>();
-			emptyLocations = field.EnumerateLocations().ToList();
+			emptyValueLocations = field.EnumerateLocations().ToList();
 
 			field.EnumerateLocations().ForEach(loc => UpdateCell(loc, getValue(loc)));
-			if (emptyLocations.Count != 1)
+			if (emptyValueLocations.Count != 1)
 				throw new InvalidOperationException("Field should contain exactly one default value");
 		}
 
@@ -37,7 +37,7 @@ namespace Puzzle15.GameField.Mutable
 		{
 			CheckLocation(valueLocation);
 
-			var emptyLocation = emptyLocations.Single();
+			var emptyLocation = emptyValueLocations.Single();
 			if (emptyLocation.GetByEdgeNeighbours().Contains(valueLocation))
 			{
 				Swap(emptyLocation, valueLocation);
@@ -64,7 +64,7 @@ namespace Puzzle15.GameField.Mutable
 		private List<CellLocation> GetLocationsInternal(TCell value)
 		{
 			return IsEmptyValue(value) 
-				? emptyLocations
+				? emptyValueLocations
 				: locations.ComputeIfAbsent(value, key => new List<CellLocation>());
 		}
 		
