@@ -14,7 +14,7 @@ namespace Puzzle15.GameField
 		IGameField<TCell> Shift(TCell value);
 		IGameField<TCell> Shift(CellLocation valueLocation);
 
-		bool IsInside(CellLocation location);
+		bool Contains(CellLocation location);
 		IEnumerable<CellLocation> GetLocations(TCell value);
 		CellLocation GetLocation(TCell value);
 		TCell this[CellLocation location] { get; }

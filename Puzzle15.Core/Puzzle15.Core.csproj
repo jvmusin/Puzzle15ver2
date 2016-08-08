@@ -38,6 +38,7 @@
     <Compile Include="Arrays\ArrayExtensions.cs" />
     <Compile Include="Arrays\CellInfo.cs" />
     <Compile Include="Arrays\CellLocation.cs" />
+    <Compile Include="Arrays\InvalidLocationException.cs" />
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

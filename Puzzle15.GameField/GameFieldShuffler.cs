@@ -23,7 +23,7 @@ namespace Puzzle15.GameField
 		{
 			var neighbours = gameField.GetLocations(gameField.EmptyCellValue).Single().GetByEdgeNeighbours();
 			foreach (var neighbour in neighbours.Shuffle())
-				if (gameField.IsInside(neighbour))
+				if (gameField.Contains(neighbour))
 					return gameField.Shift(neighbour);
 			throw new InvalidOperationException("Unable to shift an empty cell");
 		}

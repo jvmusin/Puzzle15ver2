@@ -24,28 +24,36 @@ namespace Puzzle15.GameField.Mutable
 			emptyLocations = field.EnumerateLocations().ToList();
 
 			field.EnumerateLocations().ForEach(loc => UpdateCell(loc, getValue(loc)));
-			if (field.Enumerate().Select(x => x.Value).Count(IsEmptyValue) != 1)
-				throw new InvalidOperationException("Field should contain only one default value");
+			if (emptyLocations.Count != 1)
+				throw new InvalidOperationException("Field should contain exactly one default value");
 		}
 
 		public override IGameField<TCell> Shift(TCell value)
 		{
-			return Shift(GetLocations(value).Single());
+			return Shift(GetLocation(value));
 		}
 
 		public override IGameField<TCell> Shift(CellLocation valueLocation)
 		{
+			CheckLocation(valueLocation);
+
 			var emptyLocation = emptyLocations.Single();
-			
 			if (emptyLocation.GetByEdgeNeighbours().Contains(valueLocation))
 			{
-				var value = this[valueLocation];
-				UpdateCell(emptyLocation, value);
-				UpdateCell(valueLocation, EmptyCellValue);
+				Swap(emptyLocation, valueLocation);
 				return this;
 			}
 
 			return null;
+		}
+
+		private void Swap(CellLocation x, CellLocation y)
+		{
+			var xValue = this[x];
+			var yValue = this[y];
+
+			UpdateCell(x, yValue);
+			UpdateCell(y, xValue);
 		}
 
 		public override IEnumerable<CellLocation> GetLocations(TCell value)
@@ -62,7 +70,15 @@ namespace Puzzle15.GameField.Mutable
 		
 		private bool IsEmptyValue(TCell value) => Equals(value, EmptyCellValue);
 
-		public override TCell this[CellLocation location] => field.GetValue(location);
+		public override TCell this[CellLocation location]
+		{
+			get
+			{
+				CheckLocation(location);
+				return field.GetValue(location);
+			}
+		}
+
 		private void UpdateCell(CellLocation location, TCell newValue)
 		{
 			GetLocationsInternal(this[location]).Remove(location);

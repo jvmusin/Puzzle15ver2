@@ -24,29 +24,44 @@ namespace Puzzle15.GameField.Immutable
 			emptyLocations = field.EnumerateLocations().ToList();
 
 			field.EnumerateLocations().ForEach(loc => UpdateCell(loc, getValue(loc)));
-			if (field.Enumerate().Select(x => x.Value).Count(IsEmptyValue) != 1)
-				throw new InvalidOperationException("Field should contain only one default value");
+			if (emptyLocations.Count != 1)
+				throw new InvalidOperationException("Field should contain exactly one default value");
 		}
 
 		public override IGameField<TCell> Shift(TCell value)
 		{
-			return Shift(GetLocations(value).Single());
+			return Shift(GetLocation(value));
 		}
 
 		public override IGameField<TCell> Shift(CellLocation valueLocation)
 		{
-			var emptyLocation = emptyLocations.Single();
+			CheckLocation(valueLocation);
 
+			var emptyLocation = emptyLocations.Single();
 			if (emptyLocation.GetByEdgeNeighbours().Contains(valueLocation))
 			{
 				var newField = (ImmutableGameField<TCell>) Clone();
-				var value = newField[valueLocation];
-				newField.UpdateCell(emptyLocation, value);
-				newField.UpdateCell(valueLocation, EmptyCellValue);
+				newField.Swap(emptyLocation, valueLocation);
 				return newField;
 			}
 
 			return null;
+		}
+
+		private void Swap(CellLocation x, CellLocation y)
+		{
+			var xValue = this[x];
+			var yValue = this[y];
+
+			UpdateCell(x, yValue);
+			UpdateCell(y, xValue);
+		}
+
+		private void UpdateCell(CellLocation location, TCell newValue)
+		{
+			GetLocationsInternal(this[location]).Remove(location);
+			field.SetValue(newValue, location);
+			GetLocationsInternal(newValue).Add(location);
 		}
 
 		public override IEnumerable<CellLocation> GetLocations(TCell value)
@@ -63,12 +78,13 @@ namespace Puzzle15.GameField.Immutable
 
 		private bool IsEmptyValue(TCell value) => Equals(value, EmptyCellValue);
 
-		public override TCell this[CellLocation location] => field.GetValue(location);
-		private void UpdateCell(CellLocation location, TCell newValue)
+		public override TCell this[CellLocation location]
 		{
-			GetLocationsInternal(this[location]).Remove(location);
-			field.SetValue(newValue, location);
-			GetLocationsInternal(newValue).Add(location);
+			get
+			{
+				CheckLocation(location);
+				return field.GetValue(location);
+			}
 		}
 
 		public override IEnumerator<CellInfo<TCell>> GetEnumerator() => field.Enumerate().GetEnumerator();

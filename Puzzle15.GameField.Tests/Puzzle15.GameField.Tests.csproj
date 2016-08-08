@@ -51,12 +51,13 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameFieldConsistencyTests.cs" />
     <Compile Include="GameFieldFactoriesNinjectModule.cs" />
-    <Compile Include="GameField_Should.cs" />
+    <Compile Include="GameFieldShiftTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameField_Should.Base.cs" />
+    <Compile Include="GameFieldTestsBase.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

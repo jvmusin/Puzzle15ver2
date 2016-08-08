@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -17,10 +18,18 @@ namespace Puzzle15.GameField
 			Size = size;
 		}
 
+		protected void CheckLocation(CellLocation location)
+		{
+			if (!location.IsInside(Size))
+				throw new InvalidLocationException();
+		}
+
+		private static bool IsInRange(int value, int from, int to) => from <= value && value < to;
+
 		public abstract IGameField<TCell> Shift(TCell value);
 		public abstract IGameField<TCell> Shift(CellLocation valueLocation);
 
-		public bool IsInside(CellLocation location)
+		public bool Contains(CellLocation location)
 		{
 			var row = location.Row;
 			var col = location.Column;
@@ -31,7 +40,13 @@ namespace Puzzle15.GameField
 
 		public abstract IEnumerable<CellLocation> GetLocations(TCell value);
 
-		public virtual CellLocation GetLocation(TCell value) => GetLocations(value).Single();
+		public virtual CellLocation GetLocation(TCell value)
+		{
+			var locations = GetLocations(value).ToList();
+			if (locations.Count != 1)
+				throw new ArgumentException($"Values count on the field should be 1, but now is {locations.Count}");
+			return locations.Single();
+		}
 
 		public abstract TCell this[CellLocation location] { get; }
 

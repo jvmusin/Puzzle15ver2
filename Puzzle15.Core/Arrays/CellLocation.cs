@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace Puzzle15.Core.Arrays
@@ -14,6 +15,14 @@ namespace Puzzle15.Core.Arrays
 			Row = row;
 			Column = column;
 		}
+
+		public bool IsInside(Size fieldSize)
+		{
+			return InInRange(Row, 0, fieldSize.Height) &&
+			       InInRange(Column, 0, fieldSize.Width);
+		}
+
+		private static bool InInRange(int value, int from, int to) => from <= value && value < to;
 
 		public IEnumerable<CellLocation> GetByEdgeNeighbours()
 		{
