@@ -4,12 +4,12 @@ using Puzzle15.Core.Arrays;
 
 namespace Puzzle15.GameField.Mutable
 {
-	public class MutableGameFieldFactory<T> : IGameFieldFactory<T>
+	public class MutableGameFieldFactory<TCell> : IGameFieldFactory<TCell>
 	{
-		public IGameField<T> CreateGameField(Size size, Func<CellLocation, T> getValue)
-			=> new MutableGameField<T>(size, getValue);
+		public IGameField<TCell> CreateGameField(Size size, Func<CellLocation, TCell> getValue)
+			=> new MutableGameField<TCell>(size, getValue);
 
-		public IGameField<T> CreateGameField(IGameField<T> source) 
+		public IGameField<TCell> CreateGameField(IGameField<TCell> source) 
 			=> CreateGameField(source.Size, loc => source[loc]);
 	}
 }

@@ -6,72 +6,74 @@ using Puzzle15.Core.Arrays;
 
 namespace Puzzle15.GameField.Wrapping
 {
-	public class WrappingGameField<T> : GameFieldBase<T>
+	public class WrappingGameField<TCell> : GameFieldBase<TCell>
 	{
 		public override bool Immutable => true;
 
-		private readonly IGameField<T> parent;
-		private readonly CellInfo<T> changedCell;
+		private readonly IGameField<TCell> parent;
+		private readonly CellInfo<TCell> changedCell;
 		
-		public WrappingGameField(IGameField<T> source) : this(source.Size)
+		public WrappingGameField(IGameField<TCell> source) : this(source.Size)
 		{
 			parent = source.Clone();
+			CheckDefaultValuesCount();
 		}
 
-		public WrappingGameField(Size size, Func<CellLocation, T> getValue) : this(size)
+		public WrappingGameField(Size size, Func<CellLocation, TCell> getValue) : this(size)
 		{
 			foreach (var location in this.Select(x => x.Location))
 			{
-				var cell = new CellInfo<T>(location, getValue(location));
-				parent = new WrappingGameField<T>(parent ?? new WrappingGameField<T>(size), cell);
+				var cell = new CellInfo<TCell>(location, getValue(location));
+				parent = new WrappingGameField<TCell>(parent ?? new WrappingGameField<TCell>(size), cell);
 			}
+			CheckDefaultValuesCount();
 		}
 
 		private WrappingGameField(Size size) : base(size) { }
 
-		private WrappingGameField(IGameField<T> source, CellInfo<T> changedCell) : this(source.Size)
+		private WrappingGameField(IGameField<TCell> source, CellInfo<TCell> changedCell) : this(source.Size)
 		{
 			parent = source;
 			this.changedCell = changedCell;
 		}
 
-		public override IGameField<T> Shift(T value)
+		public override IGameField<TCell> Shift(TCell value)
 		{
 			return Shift(() => value, GetLocation(value));
 		}
 
-		public override IGameField<T> Shift(CellLocation valueLocation)
+		public override IGameField<TCell> Shift(CellLocation valueLocation)
 		{
 			CheckLocation(valueLocation);
 			return Shift(() => this[valueLocation], valueLocation);
 		}
 
-		private IGameField<T> Shift(Func<T> getValue, CellLocation valueLocation)
+		private IGameField<TCell> Shift(Func<TCell> getValue, CellLocation valueLocation)
 		{
 			var emptyCellLocation = GetLocation(EmptyCellValue);
 			if (emptyCellLocation.GetByEdgeNeighbours().Contains(valueLocation))
 			{
 				return ApplyChanges(
-					new LazyCellInfo<T>(emptyCellLocation, getValue),
-					new CellInfo<T>(valueLocation, EmptyCellValue));
+					new LazyCellInfo<TCell>(emptyCellLocation, getValue),
+					new CellInfo<TCell>(valueLocation, EmptyCellValue));
 			}
 
-			return null;
+			throw new InvalidLocationException($"The is no empty cell around {valueLocation}");
 		}
 
-		private WrappingGameField<T> ApplyChanges(params CellInfo<T>[] newCells)
+		private WrappingGameField<TCell> ApplyChanges(params CellInfo<TCell>[] changedCells)
 		{
-			return newCells.Aggregate(this, (field, cell) => new WrappingGameField<T>(field, cell));
+			return changedCells.Aggregate(this, (field, cell) => new WrappingGameField<TCell>(field, cell));
 		}
 
-		public override IEnumerable<CellLocation> GetLocations(T value)
+		public override IEnumerable<CellLocation> GetLocations(TCell value)
 		{
 			return this
 				.Where(x => x != null && Equals(x.Value, value))
 				.Select(x => x.Location);
 		}
 
-		public override CellLocation GetLocation(T value)
+		public override CellLocation GetLocation(TCell value)
 		{
 			if (changedCell != null && Equals(changedCell.Value, value))
 				return changedCell.Location;
@@ -80,7 +82,7 @@ namespace Puzzle15.GameField.Wrapping
 			throw new ArgumentException($"There is no {value} on the field", nameof(value));
 		}
 
-		public override T this[CellLocation location]
+		public override TCell this[CellLocation location]
 		{
 			get
 			{
@@ -92,16 +94,16 @@ namespace Puzzle15.GameField.Wrapping
 			}
 		}
 
-		public override IEnumerator<CellInfo<T>> GetEnumerator()
+		public override IEnumerator<CellInfo<TCell>> GetEnumerator()
 		{
 			return ArrayExtensions.EnumerateLocations(Size)
-				.Select(loc => new LazyCellInfo<T>(loc, () => this[loc]))
+				.Select(loc => new LazyCellInfo<TCell>(loc, () => this[loc]))
 				.GetEnumerator();
 		}
 
-		public override IGameField<T> Clone()
+		public override IGameField<TCell> Clone()
 		{
-			return new WrappingGameField<T>(parent, null);
+			return new WrappingGameField<TCell>(parent, null);
 		}
 	}
 }

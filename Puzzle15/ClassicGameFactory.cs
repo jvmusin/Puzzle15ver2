@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using Puzzle15.Core.Arrays;
 using Puzzle15.GameField;
 
 namespace Puzzle15
@@ -22,21 +21,20 @@ namespace Puzzle15
 
 		public IGame<int> CreateGame(int fieldSideLength, int difficulty)
 		{
-			var gameField = gameFieldShuffler.Shuffle(GetTarget(fieldSideLength), difficulty);
-			var target = GetTarget(fieldSideLength);
-			return new ClassicGame(gameField, target);
+			var target = CreateTargetField(fieldSideLength);
+			var startingGameField = gameFieldShuffler.Shuffle(target.Clone(), difficulty);
+			return new ClassicGame(startingGameField, f => f.Equals(target));
 		}
 
-		private IGameField<int> GetTarget(int fieldSideLength)
+		private IGameField<int> CreateTargetField(int fieldSideLength)
 		{
 			var fieldSize = new Size(fieldSideLength, fieldSideLength);
 			var cellsCount = fieldSideLength*fieldSideLength;
-			return gameFieldFactory.CreateGameField(fieldSize, loc => GetIndex(loc, fieldSideLength)%cellsCount);
-		}
-
-		private static int GetIndex(CellLocation location, int fieldWidth)
-		{
-			return location.Row*fieldWidth + location.Column + 1;
+			return gameFieldFactory.CreateGameField(fieldSize, loc =>
+			{
+				var value = loc.Row*fieldSideLength + loc.Column + 1;
+				return value%cellsCount;
+			});
 		}
 	}
 }

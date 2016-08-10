@@ -13,19 +13,21 @@ namespace Puzzle15.GameField
 	{
 		public IGameField<T> Shuffle(IGameField<T> gameField, int quality)
 		{
-			var shiftsCount = 1 << quality;
-			for (var i = 0; i < shiftsCount; i++)
-				gameField = ShiftRandom(gameField);
-			return gameField;
+			if (quality < 0 || quality > 30)
+				throw new ArgumentException("Quality should be ranged in [0,30]");
+
+			return Enumerable.Range(0, 1 << quality)
+				.Aggregate(gameField, (existingField, i) => ShiftRandom(existingField));
 		}
 
 		private static IGameField<T> ShiftRandom(IGameField<T> gameField)
 		{
-			var neighbours = gameField.GetLocations(gameField.EmptyCellValue).Single().GetByEdgeNeighbours();
-			foreach (var neighbour in neighbours.Shuffle())
-				if (gameField.Contains(neighbour))
-					return gameField.Shift(neighbour);
-			throw new InvalidOperationException("Unable to shift an empty cell");
+			var neighbours = gameField.GetLocation(gameField.EmptyCellValue).GetByEdgeNeighbours();
+			var cellToShift = neighbours.Shuffle().FirstOrDefault(gameField.Contains);
+
+			if (cellToShift == null)
+				throw new InvalidOperationException("Unable to shift an empty cell");
+			return gameField.Shift(cellToShift);
 		}
 	}
 }

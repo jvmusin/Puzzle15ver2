@@ -4,12 +4,12 @@ using Puzzle15.Core.Arrays;
 
 namespace Puzzle15.GameField.Wrapping
 {
-	public class WrappingGameFieldFactory<T> : IGameFieldFactory<T>
+	public class WrappingGameFieldFactory<TCell> : IGameFieldFactory<TCell>
 	{
-		public IGameField<T> CreateGameField(Size size, Func<CellLocation, T> getValue)
-			=> new WrappingGameField<T>(size, getValue);
+		public IGameField<TCell> CreateGameField(Size size, Func<CellLocation, TCell> getValue)
+			=> new WrappingGameField<TCell>(size, getValue);
 
-		public IGameField<T> CreateGameField(IGameField<T> source)
-			=> new WrappingGameField<T>(source);
+		public IGameField<TCell> CreateGameField(IGameField<TCell> source)
+			=> new WrappingGameField<TCell>(source);
 	}
 }

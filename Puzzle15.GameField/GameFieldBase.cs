@@ -24,6 +24,15 @@ namespace Puzzle15.GameField
 				throw new InvalidLocationException();
 		}
 
+		protected void CheckDefaultValuesCount()
+		{
+			var count = this.Count(x => IsEmptyValue(x.Value));
+			if (count != 1)
+				throw new InvalidOperationException($"Field should contain exactly 1 default value, but found {count}");
+		}
+		
+		protected bool IsEmptyValue(TCell value) => Equals(value, EmptyCellValue);
+
 		private static bool IsInRange(int value, int from, int to) => from <= value && value < to;
 
 		public abstract IGameField<TCell> Shift(TCell value);

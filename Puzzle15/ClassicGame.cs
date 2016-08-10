@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Linq;
 using Puzzle15.Core.Arrays;
@@ -28,22 +27,21 @@ namespace Puzzle15
 
 	public class ClassicGame : IGame<int>
 	{
-		public Size FieldSize { get; }
+		public Size FieldSize => CurrentGameField.Size;
 		public int Turns => CurrentGameData.Turns;
-		public bool Finished => CurrentGameField.Equals(target);
-		private readonly IGameField<int> target;
+		public bool Finished => isFinished(CurrentGameField);
+		private readonly Predicate<IGameField<int>> isFinished;
 
-		private readonly Stack<GameData> history = new Stack<GameData>();
+		private readonly Stack<GameData> history;
 		private GameData CurrentGameData => history.Peek();
 		private IGameField<int> CurrentGameField => CurrentGameData.GameField;
 
-		public ClassicGame(IGameField<int> gameField, IGameField<int> target)
+		public ClassicGame(IGameField<int> startingGameField, Predicate<IGameField<int>> finishedCondition)
 		{
-			Contract.Assert(Equals(gameField.Size, target.Size), $"Sizes of {nameof(gameField)} and {nameof(target)} should be equal");
+			isFinished = finishedCondition;
 
-			this.target = target.Clone();
-			FieldSize = gameField.Size;
-			history.Push(new GameData(0, gameField.Clone()));
+			history = new Stack<GameData>();
+			history.Push(new GameData(0, startingGameField.Clone()));
 		}
 
 		public bool Shift(int value)
@@ -68,7 +66,7 @@ namespace Puzzle15
 		public bool Undo()
 		{
 			if (!CurrentGameField.Immutable)
-				throw new InvalidOperationException("Operation is allowed only for mutable fields");
+				throw new InvalidOperationException("Operation is allowed only for immutable fields");
 
 			if (history.Count > 1)
 			{

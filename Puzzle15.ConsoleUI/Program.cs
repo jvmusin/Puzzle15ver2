@@ -22,8 +22,7 @@ namespace Puzzle15.ConsoleUI
 			kernel.Bind<IGameFieldFactory<int>>().To<ImmutableGameFieldFactory<int>>();
 			kernel.Bind<IGameFieldShuffler<int>>().To<GameFieldShuffler<int>>();
 			kernel.Bind<IGameFactory<int>>().To<ClassicGameFactory>();
-			//kernel.Get<Program>().Run();
-			kernel.Get<FieldShufflerTest>().Run();
+			kernel.Get<Program>().Run();
 		}
 
 		private void Run()
@@ -32,7 +31,7 @@ namespace Puzzle15.ConsoleUI
 			while (!game.Finished)
 			{
 				PrintGame(game);
-				while (!DoAction(game)) ;
+				while (!TryMakeAction(game)) ;
 				Console.WriteLine("\n----------------------\n");
 			}
 			PrintCongratulations(game);
@@ -69,7 +68,7 @@ namespace Puzzle15.ConsoleUI
 			Console.WriteLine($"YAY! {game.Turns} turns done!");
 		}
 
-		private static bool DoAction(IGame<int> game)
+		private static bool TryMakeAction(IGame<int> game)
 		{
 			Console.Write("Input action: ");
 			var parts = Console.ReadLine().Split(' ');

@@ -24,8 +24,7 @@ namespace Puzzle15.GameField.Immutable
 			emptyValueLocations = field.EnumerateLocations().ToList();
 
 			field.EnumerateLocations().ForEach(loc => UpdateCell(loc, getValue(loc)));
-			if (emptyValueLocations.Count != 1)
-				throw new InvalidOperationException("Field should contain exactly one default value");
+			CheckDefaultValuesCount();
 		}
 
 		public override IGameField<TCell> Shift(TCell value)
@@ -45,7 +44,7 @@ namespace Puzzle15.GameField.Immutable
 				return newField;
 			}
 
-			return null;
+			throw new InvalidLocationException($"The is no empty cell around {valueLocation}");
 		}
 
 		private void Swap(CellLocation x, CellLocation y)
@@ -75,8 +74,6 @@ namespace Puzzle15.GameField.Immutable
 				? emptyValueLocations
 				: locations.ComputeIfAbsent(value, key => new List<CellLocation>());
 		}
-
-		private bool IsEmptyValue(TCell value) => Equals(value, EmptyCellValue);
 
 		public override TCell this[CellLocation location]
 		{

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Ninject;
+using Puzzle15.GameField.Wrapping;
 
 namespace Puzzle15.GameField.Tests
 {
@@ -7,7 +9,10 @@ namespace Puzzle15.GameField.Tests
 	{
 		private static readonly IKernel Kernel = new StandardKernel(new GameFieldFactoriesNinjectModule());
 
-		protected static readonly IEnumerable<IGameFieldFactory<int>> GameFieldFactories =
+		protected static IEnumerable<IGameFieldFactory<int>> GameFieldFactories =>
 			Kernel.GetAll<IGameFieldFactory<int>>();
+
+		protected static IEnumerable<IGameFieldFactory<int>> ClassicGameFieldFactories =>
+			GameFieldFactories.Where(f => !(f is WrappingGameFieldFactory<int>));
 	}
 }

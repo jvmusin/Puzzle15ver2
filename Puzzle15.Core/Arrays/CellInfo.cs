@@ -7,10 +7,15 @@ namespace Puzzle15.Core.Arrays
 		public CellLocation Location { get; }
 		public virtual T Value { get; }
 
-		public CellInfo(CellLocation location, T value = default(T))
+		public CellInfo(CellLocation location, T value)
 		{
 			Location = location;
 			Value = value;
+		}
+
+		protected CellInfo(CellLocation location)
+		{
+			Location = location;
 		}
 
 		public bool Equals(CellInfo<T> other)

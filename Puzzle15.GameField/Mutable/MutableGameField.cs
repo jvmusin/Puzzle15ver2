@@ -24,8 +24,7 @@ namespace Puzzle15.GameField.Mutable
 			emptyValueLocations = field.EnumerateLocations().ToList();
 
 			field.EnumerateLocations().ForEach(loc => UpdateCell(loc, getValue(loc)));
-			if (emptyValueLocations.Count != 1)
-				throw new InvalidOperationException("Field should contain exactly one default value");
+			CheckDefaultValuesCount();
 		}
 
 		public override IGameField<TCell> Shift(TCell value)
@@ -44,7 +43,7 @@ namespace Puzzle15.GameField.Mutable
 				return this;
 			}
 
-			return null;
+			throw new InvalidLocationException($"The is no empty cell around {valueLocation}");
 		}
 
 		private void Swap(CellLocation x, CellLocation y)
