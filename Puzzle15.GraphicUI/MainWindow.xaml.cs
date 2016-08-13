@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Ninject;
 using Puzzle15.Core.Arrays;
 using Puzzle15.Game;
-using Puzzle15.GraphicUI.Modules;
+using Puzzle15.GraphicUI.Utils;
 
 namespace Puzzle15.GraphicUI
 {
@@ -62,7 +62,7 @@ namespace Puzzle15.GraphicUI
 			[Key.Left] = CellLocation.DeltaLeft
 		};
 
-		private void MainWindow_OnKeyDown(object sender, KeyEventArgs e)
+		private void KeyPressedHandle(object sender, KeyEventArgs e)
 		{
 			if (Game == null || Game.Finished)
 				return;

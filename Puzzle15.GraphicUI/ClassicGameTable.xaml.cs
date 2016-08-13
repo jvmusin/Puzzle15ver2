@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Puzzle15.Game;
+using Puzzle15.GraphicUI.Utils;
 using Brush = System.Windows.Media.Brush;
 using Size = System.Drawing.Size;
 

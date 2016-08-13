@@ -10,8 +10,8 @@
         SizeToContent="WidthAndHeight"
         Background="{StaticResource FormBackground}"
         Padding="5,10,5,10"
-        KeyDown="MainWindow_OnKeyDown">
-	<StackPanel Orientation="Vertical">
+        KeyDown="KeyPressedHandle">
+	<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 
 		<local:TimerPanel Margin="5" Width="200"/>
 

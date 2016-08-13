@@ -3,7 +3,7 @@ using Puzzle15.Game;
 using Puzzle15.GameField;
 using Puzzle15.GameField.Immutable;
 
-namespace Puzzle15.GraphicUI.Modules
+namespace Puzzle15.GraphicUI.Utils
 {
 	public class ClassicGameNinjectModule : NinjectModule
 	{

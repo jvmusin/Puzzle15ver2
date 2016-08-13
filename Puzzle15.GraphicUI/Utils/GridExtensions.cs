@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using Puzzle15.Core.Arrays;
 
-namespace Puzzle15.GraphicUI
+namespace Puzzle15.GraphicUI.Utils
 {
 	public static class GridExtensions
 	{
