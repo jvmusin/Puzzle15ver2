@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Puzzle15")]
+[assembly: AssemblyTitle("Puzzle15.Game")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SKB Kontur")]
-[assembly: AssemblyProduct("Puzzle15")]
+[assembly: AssemblyProduct("Puzzle15.Game")]
 [assembly: AssemblyCopyright("Copyright © SKB Kontur 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("16a08e27-558c-4825-bf85-791155647565")]
+[assembly: Guid("32f14f5c-a00e-4ca8-91d9-23994e907ba6")]
 
 // Version information for an assembly consists of the following four values:
 //

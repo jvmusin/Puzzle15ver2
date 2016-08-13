@@ -5,7 +5,7 @@ using System.Linq;
 using Puzzle15.Core.Arrays;
 using Puzzle15.GameField;
 
-namespace Puzzle15
+namespace Puzzle15.Game
 {
 	public interface IGame<TCell>
 	{

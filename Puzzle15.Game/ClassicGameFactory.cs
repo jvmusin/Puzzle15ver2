@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Puzzle15.GameField;
 
-namespace Puzzle15
+namespace Puzzle15.Game
 {
 	public interface IGameFactory<TCell>
 	{

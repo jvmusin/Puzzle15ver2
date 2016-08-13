@@ -58,9 +58,9 @@
       <Project>{5E7BAE07-E1B3-4075-9646-46C6ACC74376}</Project>
       <Name>Puzzle15.GameField</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Puzzle15\Puzzle15.csproj">
-      <Project>{16A08E27-558C-4825-BF85-791155647565}</Project>
-      <Name>Puzzle15</Name>
+    <ProjectReference Include="..\Puzzle15.Game\Puzzle15.Game.csproj">
+      <Project>{32F14F5C-A00E-4CA8-91D9-23994E907BA6}</Project>
+      <Name>Puzzle15.Game</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
