@@ -15,10 +15,22 @@ namespace Puzzle15.GraphicUI
 
 		private static readonly int difficulty = 3;
 		private static readonly int fieldSideLength = 4;
+		private static readonly Dictionary<Key, CellLocation> Deltas;
 
 		private event Action<IGame<int>> GameUpdated;
 		
 		private IGame<int> Game { get; set; }
+
+		static MainWindow()
+		{
+			Deltas = new Dictionary<Key, CellLocation>
+			{
+				[Key.Up] = CellLocation.DeltaUp,
+				[Key.Right] = CellLocation.DeltaRight,
+				[Key.Down] = CellLocation.DeltaDown,
+				[Key.Left] = CellLocation.DeltaLeft
+			};
+		}
 
 		public MainWindow()
 		{
@@ -33,7 +45,10 @@ namespace Puzzle15.GraphicUI
 			GameUpdated += game =>
 			{
 				if (game.Finished)
+				{
+					Timer.Stop();
 					MessageBox.Show(this, "You win!");
+				}
 			};
 		}
 
@@ -51,16 +66,9 @@ namespace Puzzle15.GraphicUI
 		private void NewGameButtonHandle(object sender, MouseButtonEventArgs e)
 		{
 			Game = gameFactory.CreateGame(fieldSideLength, difficulty);
+			Timer.Start();
 			OnGameUpdated();
 		}
-
-		private static readonly Dictionary<Key, CellLocation> Deltas = new Dictionary<Key, CellLocation>
-		{
-			[Key.Up] = CellLocation.DeltaUp,
-			[Key.Right] = CellLocation.DeltaRight,
-			[Key.Down] = CellLocation.DeltaDown,
-			[Key.Left] = CellLocation.DeltaLeft
-		};
 
 		private void KeyPressedHandle(object sender, KeyEventArgs e)
 		{

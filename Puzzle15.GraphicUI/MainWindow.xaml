@@ -13,7 +13,7 @@
         KeyDown="KeyPressedHandle">
 	<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 
-		<local:TimerPanel Margin="5" Width="200"/>
+		<local:TimerPanel x:Name="Timer" Margin="5" Width="200"/>
 
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
 
