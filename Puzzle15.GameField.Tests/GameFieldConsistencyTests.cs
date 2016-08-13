@@ -82,8 +82,7 @@ namespace Puzzle15.GameField.Tests
 			};
 			var gameField = gameFieldFactory.CreateGameField(new Size(3, 3), fieldData.GetValue);
 
-			Action getLocation = () => gameField.GetLocation(valueToFind);
-			getLocation.ShouldThrow<Exception>();
+			Assert.Throws<ArgumentException>(() => gameField.GetLocation(valueToFind));
 		}
 
 		[Test]
@@ -135,7 +134,9 @@ namespace Puzzle15.GameField.Tests
 			};
 			var gameField = gameFieldFactory.CreateGameField(new Size(3, 3), fieldData.GetValue);
 
-			fieldData.Enumerate().Select(x => Equals(x.Value, gameField[x.Location])).ShouldAllBeEquivalentTo(true);
+			fieldData.Enumerate()
+				.Select(x => Equals(x.Value, gameField[x.Location]))
+				.ShouldAllBeEquivalentTo(true);
 		}
 
 		[Test]
