@@ -1,0 +1,52 @@
+﻿<Window x:Class="Puzzle15.GraphicUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Puzzle15.GraphicUI"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        SizeToContent="WidthAndHeight"
+        Background="{StaticResource FormBackground}"
+        Padding="5,10,5,10"
+        KeyDown="MainWindow_OnKeyDown">
+	<StackPanel Orientation="Vertical">
+
+		<local:TimerPanel Margin="5" Width="200"/>
+
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+
+			<local:InfoPanel x:Name="Turns"        Title="Ходов"       Value="42"  Width="200" Margin="5"/>
+			<local:InfoPanel x:Name="Difficulty"   Title="Сложность"   Value="12"  Width="200" Margin="5"/>
+
+		</StackPanel>
+
+		<local:ClassicGameTable x:Name="GameTable" Width="410" Height="410" Margin="5"/>
+
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+
+			<local:ButtonPanel x:Name="BackButton"
+                               Title="Назад"
+                               MouseLeftButtonDown="BackButtonHandle"
+                               Width="200"
+                               Margin="5"
+                               TitleSize="25"
+                               BackgroundColor="{StaticResource BackButtonBackground}"
+                               BorderColor="{StaticResource BackButtonBorder}"
+                               TitleForeground="{StaticResource BackButtonForeground}"/>
+
+			<local:ButtonPanel x:Name="NewGameButton"
+                               Title="Новая игра"
+                               MouseLeftButtonDown="NewGameButtonHandle"
+                               Width="200"
+                               Margin="5"
+                               TitleSize="25"
+                               BackgroundColor="{StaticResource NewGameButtonBackground}"
+                               BorderColor="{StaticResource NewGameButtonBorder}"
+                               TitleForeground="{StaticResource NewGameButtonForeground}"/>
+
+		</StackPanel>
+
+	</StackPanel>
+</Window>

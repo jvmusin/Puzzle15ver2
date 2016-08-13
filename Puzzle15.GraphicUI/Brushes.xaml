@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	
+	<SolidColorBrush x:Key="FormBackground"             Color="#8AE4AE"/>
+
+	<SolidColorBrush x:Key="EmptyCell"                  Color="#936CD6"/>
+	<SolidColorBrush x:Key="FilledCell"                 Color="#FFEA73"/>
+	<SolidColorBrush x:Key="FieldBackground"            Color="#7943D9"/>
+	<SolidColorBrush x:Key="FieldFont"                  Color="#2B0483"/>
+	<SolidColorBrush x:Key="FieldNumbersForeground"     Color="#230C5E"/>
+
+	<SolidColorBrush x:Key="MainInfoBackground"         Color="#CDBBEB"/>
+	<SolidColorBrush x:Key="MainInfoBorder"             Color="#7745D8"/>
+	<SolidColorBrush x:Key="MainInfoForeground"         Color="#411F8D"/>
+	<SolidColorBrush x:Key="MainInfoNumbersFont"        Color="#270067"/>
+
+	<SolidColorBrush x:Key="TimerBackground"            Color="#FFEA73"/>
+	<SolidColorBrush x:Key="TimerBorder"                Color="#F3DB23"/>
+	<SolidColorBrush x:Key="TimerForeground"            Color="#22113E"/>
+
+	<SolidColorBrush x:Key="BackButtonBackground"       Color="#936CD6"/>
+	<SolidColorBrush x:Key="BackButtonBorder"           Color="#843DE5"/>
+	<SolidColorBrush x:Key="BackButtonForeground"       Color="#2E046A"/>
+
+	<SolidColorBrush x:Key="NewGameButtonBackground"    Color="#63DC8F"/>
+	<SolidColorBrush x:Key="NewGameButtonBorder"        Color="#00792C"/>
+	<SolidColorBrush x:Key="NewGameButtonForeground"    Color="#128B48"/>
+	
+</ResourceDictionary>
