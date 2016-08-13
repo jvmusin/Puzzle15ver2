@@ -10,11 +10,19 @@ namespace Puzzle15.Core.Arrays
 		public int Row { get; }
 		public int Column { get; }
 
+		public static readonly CellLocation DeltaUp = new CellLocation(-1, 0);
+		public static readonly CellLocation DeltaDown = new CellLocation(1, 0);
+		public static readonly CellLocation DeltaLeft = new CellLocation(0, -1);
+		public static readonly CellLocation DeltaRight = new CellLocation(0, 1);
+		public static IEnumerable<CellLocation> Deltas = new[] {DeltaUp, DeltaRight, DeltaDown, DeltaLeft};
+
 		public CellLocation(int row, int column)
 		{
 			Row = row;
 			Column = column;
 		}
+
+		public CellLocation Mirror() => new CellLocation(-Row, -Column);
 
 		public bool IsInsideField(Size fieldSize)
 		{
@@ -22,19 +30,14 @@ namespace Puzzle15.Core.Arrays
 			       InInRange(Column, 0, fieldSize.Width);
 		}
 
-		private static bool InInRange(int value, int from, int to) => from <= value && value < to;
+		private static bool InInRange(int value, int from, int to)
+		{
+			return from <= value && value < to;
+		}
 
 		public IEnumerable<CellLocation> GetByEdgeNeighbours()
 		{
-			return GetByEdgeDeltas().Select(delta => this + delta);
-		}
-
-		private static IEnumerable<CellLocation> GetByEdgeDeltas()
-		{
-			var dx = new[] {-1, 0, 1, 0};
-			var dy = new[] {0, 1, 0, -1};
-			for (var i = 0; i < 4; i++)
-				yield return new CellLocation(dx[i], dy[i]);
+			return Deltas.Select(delta => this + delta);
 		}
 
 		public static CellLocation operator +(CellLocation location, CellLocation delta)
