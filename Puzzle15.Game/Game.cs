@@ -12,7 +12,7 @@ namespace Puzzle15.Game
 		Size FieldSize { get; }
 		int Turns { get; }
 		bool Finished { get; }
-		
+
 		bool Shift(TCell value);
 		bool Shift(CellLocation valueLocation);
 
@@ -25,18 +25,18 @@ namespace Puzzle15.Game
 		IEnumerable<CellInfo<TCell>> EnumerateField();
 	}
 
-	public class Game<T> : IGame<T>
+	public class Game<TCell> : IGame<TCell>
 	{
 		public Size FieldSize => CurrentGameField.Size;
 		public int Turns => CurrentGameData.Turns;
 		public bool Finished => isFinished(CurrentGameField);
-		private readonly Predicate<IGameField<T>> isFinished;
+		private readonly Predicate<IGameField<TCell>> isFinished;
 
 		private readonly Stack<GameData> history;
 		private GameData CurrentGameData => history.Peek();
-		private IGameField<T> CurrentGameField => CurrentGameData.GameField;
+		private IGameField<TCell> CurrentGameField => CurrentGameData.GameField;
 
-		public Game(IGameField<T> startingGameField, Predicate<IGameField<T>> finishedCondition)
+		public Game(IGameField<TCell> startingGameField, Predicate<IGameField<TCell>> finishedCondition)
 		{
 			isFinished = finishedCondition;
 
@@ -44,7 +44,7 @@ namespace Puzzle15.Game
 			history.Push(new GameData(0, startingGameField.Clone()));
 		}
 
-		public bool Shift(T value)
+		public bool Shift(TCell value)
 		{
 			return Shift(GetLocation(value));
 		}
@@ -76,18 +76,18 @@ namespace Puzzle15.Game
 			return false;
 		}
 
-		public T this[CellLocation location] => CurrentGameField[location];
-		public CellLocation GetLocation(T value) => GetLocations(value).Single();
-		public IEnumerable<CellLocation> GetLocations(T value) => CurrentGameField.GetLocations(value);
+		public TCell this[CellLocation location] => CurrentGameField[location];
+		public CellLocation GetLocation(TCell value) => GetLocations(value).Single();
+		public IEnumerable<CellLocation> GetLocations(TCell value) => CurrentGameField.GetLocations(value);
 
-		public IEnumerable<CellInfo<T>> EnumerateField() => CurrentGameField;
+		public IEnumerable<CellInfo<TCell>> EnumerateField() => CurrentGameField;
 
 		private class GameData
 		{
 			public int Turns { get; }
-			public IGameField<T> GameField { get; }
+			public IGameField<TCell> GameField { get; }
 
-			public GameData(int turns, IGameField<T> gameField)
+			public GameData(int turns, IGameField<TCell> gameField)
 			{
 				Turns = turns;
 				GameField = gameField;
