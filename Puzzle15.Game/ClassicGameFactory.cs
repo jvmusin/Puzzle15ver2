@@ -5,7 +5,7 @@ namespace Puzzle15.Game
 {
 	public interface IGameFactory<TCell>
 	{
-		IGame<TCell> CreateGame(int fieldSideLength, int difficulty);
+		IGame<TCell> CreateGame(int fieldSideLength, int difficulty);	//TODO:	do we really need fieldSideLength?
 	}
 
 	public class ClassicGameFactory : IGameFactory<int>
@@ -23,7 +23,7 @@ namespace Puzzle15.Game
 		{
 			var target = CreateTargetField(fieldSideLength);
 			var startingGameField = gameFieldShuffler.Shuffle(target.Clone(), difficulty);
-			return new ClassicGame(startingGameField, f => f.Equals(target));
+			return new Game<int>(startingGameField, target.Equals);
 		}
 
 		private IGameField<int> CreateTargetField(int fieldSideLength)

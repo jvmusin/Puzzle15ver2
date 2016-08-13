@@ -25,18 +25,18 @@ namespace Puzzle15.Game
 		IEnumerable<CellInfo<TCell>> EnumerateField();
 	}
 
-	public class ClassicGame : IGame<int>
+	public class Game<T> : IGame<T>
 	{
 		public Size FieldSize => CurrentGameField.Size;
 		public int Turns => CurrentGameData.Turns;
 		public bool Finished => isFinished(CurrentGameField);
-		private readonly Predicate<IGameField<int>> isFinished;
+		private readonly Predicate<IGameField<T>> isFinished;
 
 		private readonly Stack<GameData> history;
 		private GameData CurrentGameData => history.Peek();
-		private IGameField<int> CurrentGameField => CurrentGameData.GameField;
+		private IGameField<T> CurrentGameField => CurrentGameData.GameField;
 
-		public ClassicGame(IGameField<int> startingGameField, Predicate<IGameField<int>> finishedCondition)
+		public Game(IGameField<T> startingGameField, Predicate<IGameField<T>> finishedCondition)
 		{
 			isFinished = finishedCondition;
 
@@ -44,7 +44,7 @@ namespace Puzzle15.Game
 			history.Push(new GameData(0, startingGameField.Clone()));
 		}
 
-		public bool Shift(int value)
+		public bool Shift(T value)
 		{
 			return Shift(GetLocation(value));
 		}
@@ -76,18 +76,18 @@ namespace Puzzle15.Game
 			return false;
 		}
 
-		public int this[CellLocation location] => CurrentGameField[location];
-		public CellLocation GetLocation(int value) => GetLocations(value).Single();
-		public IEnumerable<CellLocation> GetLocations(int value) => CurrentGameField.GetLocations(value);
+		public T this[CellLocation location] => CurrentGameField[location];
+		public CellLocation GetLocation(T value) => GetLocations(value).Single();
+		public IEnumerable<CellLocation> GetLocations(T value) => CurrentGameField.GetLocations(value);
 
-		public IEnumerable<CellInfo<int>> EnumerateField() => CurrentGameField;
+		public IEnumerable<CellInfo<T>> EnumerateField() => CurrentGameField;
 
 		private class GameData
 		{
 			public int Turns { get; }
-			public IGameField<int> GameField { get; }
+			public IGameField<T> GameField { get; }
 
-			public GameData(int turns, IGameField<int> gameField)
+			public GameData(int turns, IGameField<T> gameField)
 			{
 				Turns = turns;
 				GameField = gameField;
