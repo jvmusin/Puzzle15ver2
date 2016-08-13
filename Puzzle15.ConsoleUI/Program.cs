@@ -57,7 +57,8 @@ namespace Puzzle15.ConsoleUI
 			{
 				for (var column = 0; column < width; column++)
 				{
-					Console.Write(game[new CellLocation(row, column)] + " ");
+					var value = game[new CellLocation(row, column)];
+					Console.Write((value == 0 ? "  " : value + " "));
 				}
 				Console.WriteLine();
 			}
