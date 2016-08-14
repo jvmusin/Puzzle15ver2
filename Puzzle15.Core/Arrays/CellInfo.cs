@@ -34,6 +34,11 @@ namespace Puzzle15.Core.Arrays
 		{
 			return Location.GetHashCode() ^ Value.GetHashCode();
 		}
+
+		public override string ToString()
+		{
+			return $"Location: {Location}, Value: {Value}";
+		}
 	}
 
 	public class LazyCellInfo<T> : CellInfo<T>

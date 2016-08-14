@@ -10,6 +10,7 @@ namespace Puzzle15.GameField
 	{
 		private readonly IGameField<TCell> parent;
 		private readonly CellInfo<TCell> changedCell;
+		//TODO:	Add empty cell location
 
 		public WrappingGameField(IGameField<TCell> source) : this(source.Size)
 		{
@@ -19,7 +20,7 @@ namespace Puzzle15.GameField
 
 		public WrappingGameField(Size size, Func<CellLocation, TCell> getValue) : this(size)
 		{
-			foreach (var location in this.Select(x => x.Location))
+			foreach (var location in ArrayExtensions.EnumerateLocations(Size))
 			{
 				var cell = new CellInfo<TCell>(location, getValue(location));
 				parent = new WrappingGameField<TCell>(parent ?? new WrappingGameField<TCell>(size), cell);
@@ -103,7 +104,7 @@ namespace Puzzle15.GameField
 
 		public override IGameField<TCell> Clone()
 		{
-			return new WrappingGameField<TCell>(parent, null);
+			return new WrappingGameField<TCell>(parent, changedCell);	//TODO:	Add test
 		}
 	}
 }

@@ -61,5 +61,10 @@ namespace Puzzle15.Core.Arrays
 		{
 			return Row ^ Column;
 		}
+
+		public override string ToString()
+		{
+			return $"Row: {Row}, Column: {Column}";
+		}
 	}
 }
