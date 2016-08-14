@@ -5,7 +5,8 @@ namespace Puzzle15.Game
 {
 	public interface IGameFactory<TCell>
 	{
-		IGame<TCell> CreateGame(int fieldSideLength, int difficulty);	//TODO:	do we really need fieldSideLength?
+		IGame<TCell> CreateGame(Size fieldSize, int difficulty);
+		IGame<TCell> CreateGame(int fieldSideLength, int difficulty);
 	}
 
 	public class ClassicGameFactory : IGameFactory<int>
@@ -21,18 +22,22 @@ namespace Puzzle15.Game
 
 		public IGame<int> CreateGame(int fieldSideLength, int difficulty)
 		{
-			var target = CreateTargetField(fieldSideLength);
+			return CreateGame(new Size(fieldSideLength, fieldSideLength), difficulty);
+		}
+
+		public IGame<int> CreateGame(Size fieldSize, int difficulty)
+		{
+			var target = CreateTargetField(fieldSize);
 			var startingGameField = gameFieldShuffler.Shuffle(target.Clone(), difficulty);
 			return new Game<int>(startingGameField, target.Equals);
 		}
 
-		private IGameField<int> CreateTargetField(int fieldSideLength)
+		private IGameField<int> CreateTargetField(Size fieldSize)
 		{
-			var fieldSize = new Size(fieldSideLength, fieldSideLength);
-			var cellsCount = fieldSideLength*fieldSideLength;
+			var cellsCount = fieldSize.Height*fieldSize.Width;
 			return gameFieldFactory.CreateGameField(fieldSize, loc =>
 			{
-				var value = loc.Row*fieldSideLength + loc.Column + 1;
+				var value = loc.Row*fieldSize.Width + loc.Column + 1;
 				return value%cellsCount;
 			});
 		}
