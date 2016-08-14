@@ -10,12 +10,13 @@ namespace Puzzle15.GameField
 	public abstract class GameFieldBase<TCell> : IGameField<TCell>
 	{
 		public Size Size { get; }
-		public abstract bool Immutable { get; }
+		public bool Immutable { get; }
 		public TCell EmptyCellValue => default(TCell);
 
-		protected GameFieldBase(Size size)
+		protected GameFieldBase(Size size, bool immutable)
 		{
 			Size = size;
+			Immutable = immutable;
 		}
 
 		protected void CheckLocation(CellLocation location)
@@ -32,8 +33,6 @@ namespace Puzzle15.GameField
 		}
 		
 		protected bool IsEmptyValue(TCell value) => Equals(value, EmptyCellValue);
-
-		private static bool IsInRange(int value, int from, int to) => from <= value && value < to;
 
 		public abstract IGameField<TCell> Shift(TCell value);
 		public abstract IGameField<TCell> Shift(CellLocation valueLocation);

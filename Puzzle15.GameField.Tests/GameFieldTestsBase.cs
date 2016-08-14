@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Ninject;
-using Puzzle15.GameField.Wrapping;
 
 namespace Puzzle15.GameField.Tests
 {

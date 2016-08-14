@@ -1,7 +1,4 @@
 ﻿using Ninject.Modules;
-using Puzzle15.GameField.Immutable;
-using Puzzle15.GameField.Mutable;
-using Puzzle15.GameField.Wrapping;
 
 namespace Puzzle15.GameField.Tests
 {

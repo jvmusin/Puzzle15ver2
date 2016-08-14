@@ -3,7 +3,6 @@ using Ninject;
 using Puzzle15.Core.Arrays;
 using Puzzle15.Game;
 using Puzzle15.GameField;
-using Puzzle15.GameField.Immutable;
 
 namespace Puzzle15.ConsoleUI
 {

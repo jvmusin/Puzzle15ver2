@@ -4,15 +4,13 @@ using System.Drawing;
 using System.Linq;
 using Puzzle15.Core.Arrays;
 
-namespace Puzzle15.GameField.Wrapping
+namespace Puzzle15.GameField
 {
 	public class WrappingGameField<TCell> : GameFieldBase<TCell>
 	{
-		public override bool Immutable => true;
-
 		private readonly IGameField<TCell> parent;
 		private readonly CellInfo<TCell> changedCell;
-		
+
 		public WrappingGameField(IGameField<TCell> source) : this(source.Size)
 		{
 			parent = source.Clone();
@@ -29,7 +27,9 @@ namespace Puzzle15.GameField.Wrapping
 			CheckDefaultValuesCount();
 		}
 
-		private WrappingGameField(Size size) : base(size) { }
+		private WrappingGameField(Size size) : base(size, true)
+		{
+		}
 
 		private WrappingGameField(IGameField<TCell> source, CellInfo<TCell> changedCell) : this(source.Size)
 		{
@@ -58,7 +58,7 @@ namespace Puzzle15.GameField.Wrapping
 					new CellInfo<TCell>(valueLocation, EmptyCellValue));
 			}
 
-			throw new InvalidLocationException($"The is no empty cell around {valueLocation}");
+			throw new InvalidLocationException($"There is no empty cell around {valueLocation}");
 		}
 
 		private WrappingGameField<TCell> ApplyChanges(params CellInfo<TCell>[] changedCells)
@@ -90,7 +90,7 @@ namespace Puzzle15.GameField.Wrapping
 					return changedCell.Value;
 				if (parent != null)
 					return parent[location];
-				throw new ArgumentException($"Location {location} is invalid", nameof(location));
+				throw new InvalidLocationException($"Location {location} is invalid");
 			}
 		}
 

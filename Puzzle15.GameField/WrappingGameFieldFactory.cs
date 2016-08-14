@@ -2,7 +2,7 @@
 using System.Drawing;
 using Puzzle15.Core.Arrays;
 
-namespace Puzzle15.GameField.Wrapping
+namespace Puzzle15.GameField
 {
 	public class WrappingGameFieldFactory<TCell> : IGameFieldFactory<TCell>
 	{
