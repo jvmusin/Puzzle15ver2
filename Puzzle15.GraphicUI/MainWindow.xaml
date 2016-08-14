@@ -17,8 +17,8 @@
 
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
 
-			<local:InfoPanel x:Name="Turns"        Title="Ходов"       Value="42"  Width="200" Margin="5"/>
-			<local:InfoPanel x:Name="Difficulty"   Title="Сложность"   Value="12"  Width="200" Margin="5"/>
+			<local:InfoPanel x:Name="TurnsView"        Title="Ходов"       Value="42"  Width="200" Margin="5"/>
+			<local:InfoPanel x:Name="DifficultyView"   Title="Сложность"   Value="12"  Width="200" Margin="5"/>
 
 		</StackPanel>
 

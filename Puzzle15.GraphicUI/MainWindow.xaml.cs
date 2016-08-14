@@ -6,6 +6,7 @@ using Ninject;
 using Puzzle15.Core.Arrays;
 using Puzzle15.Game;
 using Puzzle15.GraphicUI.Utils;
+using Size = System.Drawing.Size;
 
 namespace Puzzle15.GraphicUI
 {
@@ -13,8 +14,8 @@ namespace Puzzle15.GraphicUI
 	{
 		private readonly IGameFactory<int> gameFactory;
 
-		private static readonly int difficulty = 3;
-		private static readonly int fieldSideLength = 4;
+		private static readonly int Difficulty = 5;
+		private static readonly Size FieldSize = new Size(4, 4);
 		private static readonly Dictionary<Key, CellLocation> Deltas;
 
 		private event Action<IGame<int>> GameUpdated;
@@ -40,8 +41,8 @@ namespace Puzzle15.GraphicUI
 			gameFactory = kernel.Get<IGameFactory<int>>();
 
 			GameUpdated += GameTable.UpdateTable;
-			GameUpdated += game => Difficulty.Value = difficulty.ToString();
-			GameUpdated += game => Turns.Value = Game.Turns.ToString();
+			GameUpdated += game => DifficultyView.Value = Difficulty.ToString();
+			GameUpdated += game => TurnsView.Value = Game.Turns.ToString();
 			GameUpdated += game =>
 			{
 				if (game.Finished)
@@ -65,7 +66,7 @@ namespace Puzzle15.GraphicUI
 
 		private void NewGameButtonHandle(object sender, MouseButtonEventArgs e)
 		{
-			Game = gameFactory.CreateGame(fieldSideLength, difficulty);
+			Game = gameFactory.CreateGame(FieldSize, Difficulty);
 			Timer.Start();
 			OnGameUpdated();
 		}
