@@ -9,7 +9,7 @@ namespace Puzzle15.GameField
 		public IGameField<TCell> CreateGameField(Size size, Func<CellLocation, TCell> getValue)
 			=> new GameField<TCell>(size, getValue, false);
 
-		public IGameField<TCell> CreateGameField(IGameField<TCell> source) 
-			=> CreateGameField(source.Size, loc => source[loc]);
+		public IGameField<TCell> CreateGameField(IGameField<TCell> source)
+			=> new GameField<TCell>(source.Size, loc => source[loc], false);
 	}
 }

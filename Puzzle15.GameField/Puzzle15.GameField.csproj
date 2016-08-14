@@ -49,7 +49,6 @@
     <Compile Include="ImmutableGameFieldFactory.cs" />
     <Compile Include="MutableGameFieldFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SingleGameFieldFactory.cs" />
     <Compile Include="WrappingGameField.cs" />
     <Compile Include="WrappingGameFieldFactory.cs" />
   </ItemGroup>

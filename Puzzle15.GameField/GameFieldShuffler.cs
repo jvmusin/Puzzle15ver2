@@ -13,6 +13,7 @@ namespace Puzzle15.GameField
 	{
 		public IGameField<T> Shuffle(IGameField<T> gameField, int quality)
 		{
+			//TODO:	Add result checking
 			if (quality < 0 || quality > 30)
 				throw new ArgumentException("Quality should be ranged in [0,30]");
 
