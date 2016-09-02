@@ -14,7 +14,19 @@ namespace Puzzle15.GraphicUI
 	{
 		private readonly IGameFactory<int> gameFactory;
 
-		private static readonly int Difficulty = 5;
+		private int difficulty;
+		private int Difficulty
+		{
+			get { return difficulty; }
+			set
+			{
+				if (!(1 <= value && value <= 10))
+					return;
+				difficulty = value;
+				DifficultyView.Value = value.ToString();
+			}
+		}
+
 		private static readonly Size FieldSize = new Size(4, 4);
 		private static readonly Dictionary<Key, CellLocation> Deltas;
 
@@ -41,7 +53,6 @@ namespace Puzzle15.GraphicUI
 			gameFactory = kernel.Get<IGameFactory<int>>();
 
 			GameUpdated += GameTable.UpdateTable;
-			GameUpdated += game => DifficultyView.Value = Difficulty.ToString();
 			GameUpdated += game => TurnsView.Value = Game.Turns.ToString();
 			GameUpdated += game =>
 			{
@@ -90,6 +101,11 @@ namespace Puzzle15.GraphicUI
 			{
 				MessageBox.Show(this, "Invalid turn");
 			}
+		}
+
+		private void ChangeDifficultyHandle(object sender, MouseWheelEventArgs e)
+		{
+			Difficulty += Math.Sign(e.Delta);
 		}
 	}
 }
